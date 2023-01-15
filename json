@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Example</title>
+</head>
+
+<body>
+    <ul id="companies"></ul>
+    <script type="text/javascript">
+        /* var companies =
+            [
+                {
+                    "name": "Big Corporation",
+                    "noOfEmployees": 10000,
+                    "ceo": "Mary",
+                    "rating": 3.6
+                },
+                {
+                    "name": "Small Startup",
+                    "noOfEmployees": 3,
+                    "ceo": null,
+                    "rating": 4.3
+                }
+            ]; 
+            
+            //companies = JSON.stringify(companies);
+            //companies = JSON.parse(companies);
+            //console.log(companies[0]);
+            var output='';
+            for (var i = 0; i < companies.length;i++){
+                //console.log(companies[i]);
+                output  += '<li>'+companies[i].name+'</li>';
+            }
+            document.getElementById('companies').innerHTML = output; */
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {//200 status ok
+                var response = JSON.parse(xhttp.responseText);
+                //var companies = response.companies;
+                //var company = response.filter(c => c.name === 'Big Corporation');//filter company
+                var output = '';
+
+                //console.log(company);
+                for (var i = 0; i < response.length; i++) {
+                    output +=   '<li>' + response[i].name +
+                                    '<ul>' + "No of employees: " + response[i].noOfEmployees + '</ul>' +
+                                    '<ul>' + "Ceo: " + response[i].ceo + '</ul>' +
+                                    '<ul>' + "Rating: " + response[i].rating + '</ul>' +
+                                '</li>';
+                }
+                document.getElementById('companies').innerHTML = output;
+            }
+        };
+
+        xhttp.open("GET", "companies.json", true);
+        xhttp.send();
+    </script>
+</body>
+
+</html>
